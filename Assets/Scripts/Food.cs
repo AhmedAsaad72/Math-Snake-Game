@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
 public class Food : MonoBehaviour
 {
-    public Collider2D gridArea;
-
+    public BoxCollider2D gridArea;
+    private bool isRightAnswer = false;
     private Snake snake;
 
     private void Awake()
@@ -12,13 +11,9 @@ public class Food : MonoBehaviour
         snake = FindObjectOfType<Snake>();
     }
 
-    private void Start()
+    public void Respawn(bool isRight = false)
     {
-        RandomizePosition();
-    }
-
-    public void RandomizePosition()
-    {
+        isRightAnswer = isRight;
         Bounds bounds = gridArea.bounds;
 
         // Pick a random position inside the bounds
@@ -26,28 +21,25 @@ public class Food : MonoBehaviour
         int x = Mathf.RoundToInt(Random.Range(bounds.min.x, bounds.max.x));
         int y = Mathf.RoundToInt(Random.Range(bounds.min.y, bounds.max.y));
 
-        // Prevent the food from spawning on the snake
+        // Prevent the food from spawning on the snake or other food
         while (snake.Occupies(x, y))
         {
-            x++;
-
-            if (x > bounds.max.x)
-            {
-                x = Mathf.RoundToInt(bounds.min.x);
-                y++;
-
-                if (y > bounds.max.y) {
-                    y = Mathf.RoundToInt(bounds.min.y);
-                }
-            }
+            x = Mathf.RoundToInt(Random.Range(bounds.min.x, bounds.max.x));
+            y = Mathf.RoundToInt(Random.Range(bounds.min.y, bounds.max.y));
         }
+
 
         transform.position = new Vector2(x, y);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        RandomizePosition();
+        if (isRightAnswer)
+            GameManager.instance.score += 1;
+        else
+            GameManager.instance.score -= 1;
+
+        GameManager.instance.GetNewQuestion();
     }
 
 }
