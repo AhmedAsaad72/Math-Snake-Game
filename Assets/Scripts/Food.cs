@@ -34,11 +34,17 @@ public class Food : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isRightAnswer)
+        if (isRightAnswer) { 
             GameManager.instance.score += 1;
-        else
-            GameManager.instance.score -= 1;
+            AudioManager.Instance.PlaySFX("Correct Answer");
+        }
 
+        else 
+        {
+            GameManager.instance.score -= 1;
+            AudioManager.Instance.PlaySFX("Wrong Answer");
+        }
+           
         GameManager.instance.GetNewQuestion();
     }
 

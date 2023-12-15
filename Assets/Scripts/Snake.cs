@@ -82,7 +82,7 @@ public class Snake : MonoBehaviour
     {
         direction = Vector2Int.right;
         transform.position = Vector3.zero;
-
+        AudioManager.Instance.PlaySFX("Snake");
         // Start at 1 to skip destroying the head
         for (int i = 1; i < segments.Count; i++) {
             Destroy(segments[i].gameObject);
@@ -96,6 +96,7 @@ public class Snake : MonoBehaviour
         for (int i = 0; i < initialSize - 1; i++) {
             Grow();
         }
+        GameManager.instance.score = 0;
     }
 
     public bool Occupies(int x, int y)

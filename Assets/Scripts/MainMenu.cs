@@ -7,6 +7,14 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync("Snake");
+        SceneManager.LoadSceneAsync("Add");
     }
+
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+
 }
