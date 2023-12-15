@@ -186,6 +186,7 @@ GameObject:
   - component: {fileID: 5451663107492391453}
   - component: {fileID: 5451663107492391452}
   - component: {fileID: 5451663107492391443}
+  - component: {fileID: 2639840131459506173}
   m_Layer: 0
   m_Name: Food
   m_TagString: Food
@@ -300,3 +301,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridArea: {fileID: 0}
+--- !u!81 &2639840131459506173
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5451663107492391455}
+  m_Enabled: 1
