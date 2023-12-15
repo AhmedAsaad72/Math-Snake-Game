@@ -10,8 +10,6 @@ public class LevelMenu : MonoBehaviour
         string levelName = "Level" + levelId;
         SceneManager.LoadScene(levelName);
         AudioManager.Instance.musicSource.Play();
-
+        AudioManager.Instance.PlayMusic("BackGround");
     }
-
-
 }
