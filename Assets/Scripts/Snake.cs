@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -25,18 +26,24 @@ public class Snake : MonoBehaviour
         // Only allow turning up or down while moving in the x-axis
         if (direction.x != 0f)
         {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
                 input = Vector2Int.up;
-            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
+            }
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            {
                 input = Vector2Int.down;
             }
         }
         // Only allow turning left or right while moving in the y-axis
         else if (direction.y != 0f)
         {
-            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            {
                 input = Vector2Int.right;
-            } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+            }
+            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            {
                 input = Vector2Int.left;
             }
         }
@@ -45,19 +52,22 @@ public class Snake : MonoBehaviour
     private void FixedUpdate()
     {
         // Wait until the next update before proceeding
-        if (Time.time < nextUpdate) {
+        if (Time.time < nextUpdate)
+        {
             return;
         }
 
         // Set the new direction based on the input
-        if (input != Vector2Int.zero) {
+        if (input != Vector2Int.zero)
+        {
             direction = input;
         }
 
         // Set each segment's position to be the same as the one it follows. We
         // must do this in reverse order so the position is set to the previous
         // position, otherwise they will all be stacked on top of each other.
-        for (int i = segments.Count - 1; i > 0; i--) {
+        for (int i = segments.Count - 1; i > 0; i--)
+        {
             segments[i].position = segments[i - 1].position;
         }
 
@@ -82,9 +92,9 @@ public class Snake : MonoBehaviour
     {
         direction = Vector2Int.right;
         transform.position = Vector3.zero;
-        AudioManager.Instance.PlaySFX("Snake");
         // Start at 1 to skip destroying the head
-        for (int i = 1; i < segments.Count; i++) {
+        for (int i = 1; i < segments.Count; i++)
+        {
             Destroy(segments[i].gameObject);
         }
 
@@ -93,7 +103,8 @@ public class Snake : MonoBehaviour
         segments.Add(transform);
 
         // -1 since the head is already in the list
-        for (int i = 0; i < initialSize - 1; i++) {
+        for (int i = 0; i < initialSize - 1; i++)
+        {
             Grow();
         }
         GameManager.instance.score = 0;
@@ -104,7 +115,8 @@ public class Snake : MonoBehaviour
         foreach (Transform segment in segments)
         {
             if (Mathf.RoundToInt(segment.position.x) == x &&
-                Mathf.RoundToInt(segment.position.y) == y) {
+                Mathf.RoundToInt(segment.position.y) == y)
+            {
                 return true;
             }
         }
@@ -120,13 +132,18 @@ public class Snake : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Obstacle"))
         {
+            AudioManager.Instance.PlaySFX("Snake");
             ResetState();
         }
         else if (other.gameObject.CompareTag("Wall"))
         {
-            if (moveThroughWalls) {
+            if (moveThroughWalls)
+            {
                 Traverse(other.transform);
-            } else {
+            }
+            else
+            {
+                AudioManager.Instance.PlaySFX("Snake");
                 ResetState();
             }
         }
@@ -135,10 +152,12 @@ public class Snake : MonoBehaviour
     private void Traverse(Transform wall)
     {
         Vector3 position = transform.position;
-
-        if (direction.x != 0f) {
+        if (direction.x != 0f)
+        {
             position.x = Mathf.RoundToInt(-wall.position.x + direction.x);
-        } else if (direction.y != 0f) {
+        }
+        else if (direction.y != 0f)
+        {
             position.y = Mathf.RoundToInt(-wall.position.y + direction.y);
         }
 

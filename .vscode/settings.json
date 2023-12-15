@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Snake.sln"
+    "dotnet.defaultSolution": "Snake.sln",
+    "workbench.colorTheme": "Community Material Theme Darker High Contrast"
 }
